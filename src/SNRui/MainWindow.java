@@ -50,6 +50,8 @@ public class MainWindow extends JFrame {
     private JButton buildChartForBookButton;
     private JPanel chartForSNRResults;
     private JButton multDownloadVectorOnButton;
+    private JButton saveMultDownloadVectorButton;
+    private JButton clearButton;
     private DefaultTableModel tableModel; // модель таблицы
     private ArrayList<Object[]> matrix = new ArrayList<>(); // матрица
     private int columnCount = 0; // количество колонок
@@ -246,22 +248,26 @@ public class MainWindow extends JFrame {
                 XYSeries series = new XYSeries("Disperssion chart");
 
                 double accamulativeResult = 0;
+                if (chartList.size() == 0) {
+                    JOptionPane.showMessageDialog(null, "Загрузите данные для построения графика");
+                } else {
+                    for (int i = 0; i < chartList.size(); i++) {
+                        accamulativeResult += Double.parseDouble(chartList.get(i));
+                        series.add(i, accamulativeResult / chartList.size());
+                    }
 
-                for(int i = 0; i < chartList.size(); i++){
-                    accamulativeResult+=Double.parseDouble(chartList.get(i));
-                    series.add(i, accamulativeResult/chartList.size());
+                    XYDataset xyDataset = new XYSeriesCollection(series);
+                    JFreeChart chart = ChartFactory
+                            .createXYLineChart("Disperssion chart", "x", "y",
+                                    xyDataset,
+                                    PlotOrientation.VERTICAL,
+                                    true, true, true);
+                    ChartPanel panel = new ChartPanel(chart);
+                    jChartPanel.removeAll();
+                    jChartPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+                    jChartPanel.add(panel);
+                    jChartPanel.updateUI();
                 }
-
-                XYDataset xyDataset = new XYSeriesCollection(series);
-                JFreeChart chart = ChartFactory
-                        .createXYLineChart("Disperssion chart", "x", "y",
-                                xyDataset,
-                                PlotOrientation.VERTICAL,
-                                true, true, true);
-                ChartPanel panel = new ChartPanel(chart);
-                jChartPanel.removeAll();
-                jChartPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-                jChartPanel.add(panel);
             }
         });
         downloadDataForChartButton.addActionListener(new ActionListener() {
@@ -277,23 +283,28 @@ public class MainWindow extends JFrame {
 
                 double accamulativeActiveResult = 0;
                 double accamulativeAllResult = 0;
+                if (SNRResultsArrayForBookResult.size() == 0) {
+                    JOptionPane.showMessageDialog(null, "Сделайте расчеты для любой книги данных");
+                } else {
+                    for (int i = 0; i < SNRResultsArrayForBookResult.size(); i++) {
+                        accamulativeActiveResult += Double.parseDouble(SNRResultsArrayForBookResult.get(i).get(SNRResultsArrayForBookResult.get(0).size() - 2));
+                        accamulativeAllResult += Double.parseDouble(SNRResultsArrayForBookResult.get(i).get(SNRResultsArrayForBookResult.get(0).size() - 1));
+                        series.add(i, accamulativeActiveResult / accamulativeAllResult);
+                    }
 
-                for(int i = 0; i < SNRResultsArrayForBookResult.size(); i++){
-                    accamulativeActiveResult+=Double.parseDouble(SNRResultsArrayForBookResult.get(i).get(SNRResultsArrayForBookResult.size()-1));
-                    accamulativeAllResult+=Double.parseDouble(SNRResultsArrayForBookResult.get(i).get(SNRResultsArrayForBookResult.size()));
-                    series.add(i, accamulativeActiveResult/accamulativeAllResult);
+                    XYDataset xyDataset = new XYSeriesCollection(series);
+                    JFreeChart chart = ChartFactory
+                            .createXYLineChart("Disperssion chart", "x", "y",
+                                    xyDataset,
+                                    PlotOrientation.VERTICAL,
+                                    true, true, true);
+                    ChartPanel panel = new ChartPanel(chart);
+                    chartForSNRResults.removeAll();
+                    chartForSNRResults.setLayout(new FlowLayout(FlowLayout.LEFT));
+                    chartForSNRResults.add(panel);
+                    chartForSNRResults.updateUI();
+
                 }
-
-                XYDataset xyDataset = new XYSeriesCollection(series);
-                JFreeChart chart = ChartFactory
-                        .createXYLineChart("Disperssion chart", "x", "y",
-                                xyDataset,
-                                PlotOrientation.VERTICAL,
-                                true, true, true);
-                ChartPanel panel = new ChartPanel(chart);
-                chartForSNRResults.removeAll();
-                chartForSNRResults.setLayout(new FlowLayout(FlowLayout.LEFT));
-                chartForSNRResults.add(panel);
             }
         });
         multDownloadVectorOnButton.addActionListener(new ActionListener() {
@@ -302,6 +313,20 @@ public class MainWindow extends JFrame {
                 workWithTable.clearTable(tableModel);
                 SNRResult = commonWork.multiplyVectorsSNROnDownloadVector(SNRResultsArrayForBookResult, ownNumbersList);
                 commonWork.writeMultVectorOnTable(tableModel, SNRResult);
+            }
+        });
+        saveMultDownloadVectorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                workWithFiles.saveInFileWithMultOnVectorCalculated(SNRResult);
+            }
+        });
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jChartPanel.removeAll();
+                jChartPanel.updateUI();
+                chartList.clear();
             }
         });
     }

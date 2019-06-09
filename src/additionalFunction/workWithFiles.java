@@ -328,6 +328,39 @@ public class workWithFiles {
 
     }
 
-    //TODO умножение на вектор 1 строчку на корень из 1 , 2 строчку на корень из 2го с.ч. и т.д. и вывести полученную матрицу на экран
-    //^ эмпирические главные компоненты
+    public static void saveInFileWithMultOnVectorCalculated(ArrayList<ArrayList<String>> vectors) {
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("Employees sheet");
+
+
+        int rownum = 0;
+        Cell cell;
+        Row row;
+        //
+        HSSFCellStyle style = createStyleForTitle(workbook);
+
+
+        for (int j = 0; j < vectors.size(); j++) {
+            row = sheet.createRow(rownum);
+            for (int i = 0; i < vectors.get(j).size(); i++) {
+                cell = row.createCell(i, CellType.STRING);
+                cell.setCellValue(vectors.get(j).get(i));
+                cell.setCellStyle(style);
+            }
+            rownum++;
+        }
+        Date date = new Date();
+
+        File file = new File("src/" + date.toString() + ".xls");
+        file.getParentFile().mkdirs();
+        try {
+            FileOutputStream outFile = new FileOutputStream(file);
+            workbook.write(outFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
