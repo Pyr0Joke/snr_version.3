@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="SNRui.MainWindow">
+  <grid id="27dc6" binding="panel" layout-manager="GridLayoutManager" row-count="31" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="1" vgap="1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="9" y="9" width="847" height="573"/>
+    </constraints>
+    <properties>
+      <maximumSize width="500" height="30"/>
+      <minimumSize width="500" height="30"/>
+      <name value=""/>
+      <preferredSize width="500" height="30"/>
+      <toolTipText value=""/>
+    </properties>
+    <border type="bevel-lowered"/>
+    <children>
+      <component id="292f0" class="javax.swing.JButton" binding="button1" default-binding="true">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="224" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <actionCommand value="Download file"/>
+          <alignmentX value="0.0"/>
+          <alignmentY value="0.0"/>
+          <autoscrolls value="false"/>
+          <borderPainted value="true"/>
+          <hideActionText value="false"/>
+          <horizontalAlignment value="0"/>
+          <label value="Download file"/>
+          <margin top="0" left="0" bottom="0" right="0"/>
+          <text value="Download file"/>
+          <verticalAlignment value="0"/>
+          <verticalTextPosition value="0"/>
+        </properties>
+      </component>
+      <component id="97f96" class="javax.swing.JTable" binding="table1" default-binding="true">
+        <constraints>
+          <grid row="0" column="1" row-span="31" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="900" height="30"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="c47d5" class="javax.swing.JButton" binding="clearTableButton" default-binding="true">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="224" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Clear table"/>
+          <visible value="true"/>
+        </properties>
+      </component>
+      <component id="9b281" class="javax.swing.JButton" binding="calculateButton" default-binding="true">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="224" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <alignmentY value="0.0"/>
+          <text value="Calculate"/>
+        </properties>
+      </component>
+      <component id="b83ef" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="400" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="2.2"/>
+          <toolTipText value=""/>
+        </properties>
+      </component>
+      <component id="f0abe" class="javax.swing.JButton" binding="downloadExampleFileButton" default-binding="true">
+        <constraints>
+          <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="224" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <enabled value="false"/>
+          <text value="Download example file"/>
+          <visible value="true"/>
+        </properties>
+      </component>
+      <component id="d3be" class="javax.swing.JButton" binding="changeSignAndReloadButton" default-binding="true">
+        <constraints>
+          <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="224" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Change sign and reload table"/>
+        </properties>
+      </component>
+      <component id="d9892" class="javax.swing.JTextField" binding="a1TextField" default-binding="true">
+        <constraints>
+          <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="400" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="1"/>
+        </properties>
+      </component>
+      <component id="f8696" class="javax.swing.JButton" binding="saveSNRInMemory">
+        <constraints>
+          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="400" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Save SNR in memory"/>
+        </properties>
+      </component>
+      <component id="a0b4d" class="javax.swing.JButton" binding="saveSNRResultButton" default-binding="true">
+        <constraints>
+          <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="400" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Save SNR result "/>
+        </properties>
+      </component>
+      <component id="ac185" class="javax.swing.JButton" binding="saveTableButton" default-binding="true">
+        <constraints>
+          <grid row="18" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="400" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Save Table"/>
+        </properties>
+      </component>
+      <component id="3f6a0" class="javax.swing.JButton" binding="multVectorAndSNRButton" default-binding="true">
+        <constraints>
+          <grid row="17" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="400" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Mult vector and SNR data in memory"/>
+        </properties>
+      </component>
+      <component id="31c65" class="javax.swing.JButton" binding="downloadVectorOwnNumbersButton" default-binding="true">
+        <constraints>
+          <grid row="16" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="400" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Download vector own numbers"/>
+        </properties>
+      </component>
+      <component id="28551" class="javax.swing.JButton" binding="clearSNRDataInButton" default-binding="true">
+        <constraints>
+          <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="400" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Clear SNR data in memory"/>
+        </properties>
+      </component>
+      <component id="7b743" class="javax.swing.JButton" binding="saveDataVectorAndButton" default-binding="true">
+        <constraints>
+          <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="400" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Save data vector and SNR results in file"/>
+        </properties>
+      </component>
+      <component id="ec858" class="javax.swing.JButton" binding="calculateMaxSNRForButton" default-binding="true">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="400" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Calculate max SNR for all columns"/>
+        </properties>
+      </component>
+      <component id="ace6d" class="javax.swing.JButton" binding="downloadDataBookButton" default-binding="true">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="400" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Download data book"/>
+        </properties>
+      </component>
+      <component id="df197" class="javax.swing.JTextField" binding="a1TextField1" default-binding="true">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="400" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="1"/>
+        </properties>
+      </component>
+      <component id="15fca" class="javax.swing.JButton" binding="calculateForSheetButton" default-binding="true">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="400" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Calculate for sheet"/>
+        </properties>
+      </component>
+      <component id="f3177" class="javax.swing.JButton" binding="saveResultsInFileButton" default-binding="true">
+        <constraints>
+          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="30"/>
+            <preferred-size width="400" height="30"/>
+            <maximum-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Save results in file"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
