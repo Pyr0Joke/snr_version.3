@@ -1,5 +1,6 @@
 package additionalFunction;
 
+import SNRui.MainWindow;
 import com.sun.xml.internal.ws.wsdl.writer.document.Message;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
@@ -282,7 +283,7 @@ public class workWithFiles {
         return pageList;
     }
 
-    public static void saveInFileResultOfBookCalcilated(ArrayList<ArrayList<String>> vectors) {
+    public static void saveInFileResultOfBookCalculated(ArrayList<ArrayList<String>> vectors) {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Employees sheet");
 
@@ -296,9 +297,18 @@ public class workWithFiles {
 
         for (int j = 0; j < vectors.size(); j++) {
             row = sheet.createRow(rownum);
-            for (int i = 0; i < vectors.get(j).size(); i++) {
+            for (int i = 1; i < vectors.get(j).size(); i++) {
                 cell = row.createCell(i, CellType.STRING);
-                cell.setCellValue(vectors.get(j).get(i));
+                if(!vectors.get(j).get(i).equals(" ")){
+                    if(Double.parseDouble(vectors.get(j).get(i))>= MainWindow.SNRVar)
+                        cell.setCellValue(vectors.get(j).get(i));
+                    else {
+                        cell.setCellValue("0");
+                    }
+                }
+                else{
+                    cell.setCellValue(" ");
+                }
                 cell.setCellStyle(style);
             }
             rownum++;
@@ -318,14 +328,6 @@ public class workWithFiles {
 
     }
 
-    //TODO обнулить компоненты для выводы файлов
-
     //TODO умножение на вектор 1 строчку на корень из 1 , 2 строчку на корень из 2го с.ч. и т.д. и вывести полученную матрицу на экран
     //^ эмпирические главные компоненты
-
-    //TODO Информативность загрузить лямбды и вывести график накопленных лямбд деленных на N
-
-    //TODO Информативность взять по строке и действующие и вывести график накопленные действющие деленные на накопленные по строке
-
-
 }

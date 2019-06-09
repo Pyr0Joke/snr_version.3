@@ -3,6 +3,13 @@ package SNRui;
 import additionalFunction.*;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 
 import javax.swing.*;
@@ -11,6 +18,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 
@@ -23,7 +31,6 @@ public class MainWindow extends JFrame {
     private JTextField textField1; //текстовое поле для ввода значения SNR
     private JButton clearTableButton; // кнопка очистки таблицы
     private JButton changeSignAndReloadButton; // кнопка по изменению знака и перерисовке таблицы
-    private JButton saveTableButton; //кнопка сохранения таблицы
     private JTextField a1TextField; //поле для ввода номера колонки для изменения знака
     private JButton saveSNRInMemory; //кнопка для добавления последнего высчитанного значения в SNRDataList
     private JButton clearSNRDataInButton; //кнопка для очистка списка SNRDataList
@@ -36,6 +43,13 @@ public class MainWindow extends JFrame {
     private JTextField a1TextField1;
     private JButton calculateForSheetButton;
     private JButton saveResultsInFileButton;
+    private JTabbedPane tabbedPane1;
+    private JButton createChartButton;
+    private JPanel jChartPanel;
+    private JButton downloadDataForChartButton;
+    private JButton buildChartForBookButton;
+    private JPanel chartForSNRResults;
+    private JButton multDownloadVectorOnButton;
     private DefaultTableModel tableModel; // модель таблицы
     private ArrayList<Object[]> matrix = new ArrayList<>(); // матрица
     private int columnCount = 0; // количество колонок
@@ -47,16 +61,20 @@ public class MainWindow extends JFrame {
     private ArrayList<String> SNRDataMaxList = new ArrayList<>(); // список SNR значений по одному из вариантов вычислений
     private ArrayList<String> SNRDataWithNullsMaxList = new ArrayList<>(); // список SNR значений по одному из вариантов вычислений с нулями
     private ArrayList<String> ownNumbersList = new ArrayList<>(); // Вектор с собственными числами
+    private ArrayList<String> chartList = new ArrayList<>(); // Вектор с данными для графика
     private ArrayList<String> SNRListWithTempResultList = new ArrayList<>(); // Вектор с значением SNR и суммой по строке
     private ArrayList<String> SNRResultsWithVectorAndResult = new ArrayList<>(); // Вектор с значением SNR и суммой по строке полный
     private ArrayList<ArrayList<String>> SNRResultsArrayForBookResult = new ArrayList<>(); // Вектор с значением SNR и суммой по строке полный
     private ArrayList<ArrayList<Object[]>> book = new ArrayList<>(); // книга
+    private ArrayList<ArrayList<String>> SNRResult = new ArrayList<>();
     public static double SNRVar; // значение SNR из текстового поля
     public static double SNRTempData; // временное значение для SNRDataList
 
 
     public MainWindow() {
         MainWindow.getFrames()[0].setTitle("SNR");
+        MainWindow.getFrames()[0].setExtendedState(MAXIMIZED_BOTH);
+        textField1.setToolTipText("SNR");
         //добавляем панель
         this.getContentPane().add(panel);
         String col[] = {};
@@ -64,6 +82,9 @@ public class MainWindow extends JFrame {
         tableModel = new DefaultTableModel(col, 0);
         //устанавливаем DefaultTableModel в нашу таблицу
         table1.setModel(tableModel);
+        tabbedPane1.setTitleAt(0, "SNR");
+        tabbedPane1.setTitleAt(1, "Disperssion chart");
+        tabbedPane1.setTitleAt(2, "SNR chart");
 
         //лисенер для загрузки файла
         button1.addActionListener(new ActionListener() {
@@ -117,27 +138,46 @@ public class MainWindow extends JFrame {
                 workWithTable.conclusionTable(matrix, tableModel);
             }
         });
-        saveTableButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    workWithFiles.saveFile(table1);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-
-            }
-        });
+//        saveTableButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                try {
+//                    workWithFiles.saveFile(table1);
+//                } catch (Exception e1) {
+//                    e1.printStackTrace();
+//                }
+//
+//            }
+//        });
         saveSNRInMemory.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SNRDataList.add(String.valueOf(SNRTempData));
             }
         });
+        //ОЧИСТКА
         clearSNRDataInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                a1TextField1.setText("1");
+                matrix.clear();
+                columnCount = 0;
+                meanWhileList.clear();
+                varianceList.clear();
+                SNRList.clear();
+                ABSmeanWhile.clear();
                 SNRDataList.clear();
+                SNRDataMaxList.clear();
+                SNRDataWithNullsMaxList.clear();
+                ownNumbersList.clear();
+                SNRListWithTempResultList.clear();
+                SNRResultsWithVectorAndResult.clear();
+                SNRResultsArrayForBookResult.clear();
+                book.clear();
+                SNRResult.clear();
+                SNRVar=0.0;
+                SNRTempData=0.0;
+                workWithTable.clearTable(tableModel);
             }
         });
         downloadVectorOwnNumbersButton.addActionListener(new ActionListener() {
@@ -182,16 +222,86 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SNRVar = Double.parseDouble(textField1.getText());
-                ArrayList<String> result = commonWork.calculateForBook(tableModel, meanWhileList, ABSmeanWhile, varianceList, SNRList, book.get(Integer.parseInt(a1TextField1.getText())-1).get(0).length, book.get(Integer.parseInt(a1TextField1.getText())-1), table1);
-//                workWithFiles.saveSNRVectorAndResultsInFileInOneVector(result);
-                SNRResultsArrayForBookResult.add(result);
+                if(book.size()>=Integer.parseInt(a1TextField1.getText()))
+                {
+                    ArrayList<String> result = commonWork.calculateForBook(tableModel, meanWhileList, ABSmeanWhile, varianceList, SNRList, book.get(Integer.parseInt(a1TextField1.getText())-1).get(0).length, book.get(Integer.parseInt(a1TextField1.getText())-1), table1);
+                    SNRResultsArrayForBookResult.add(result);
+                    a1TextField1.setText(String.valueOf(Integer.parseInt(a1TextField1.getText())+1));
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Книга закончилась, выгрузите вектор");
+                }
 
             }
         });
         saveResultsInFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                workWithFiles.saveInFileResultOfBookCalcilated(SNRResultsArrayForBookResult);
+                workWithFiles.saveInFileResultOfBookCalculated(SNRResultsArrayForBookResult);
+            }
+        });
+        createChartButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                XYSeries series = new XYSeries("Disperssion chart");
+
+                double accamulativeResult = 0;
+
+                for(int i = 0; i < chartList.size(); i++){
+                    accamulativeResult+=Double.parseDouble(chartList.get(i));
+                    series.add(i, accamulativeResult/chartList.size());
+                }
+
+                XYDataset xyDataset = new XYSeriesCollection(series);
+                JFreeChart chart = ChartFactory
+                        .createXYLineChart("Disperssion chart", "x", "y",
+                                xyDataset,
+                                PlotOrientation.VERTICAL,
+                                true, true, true);
+                ChartPanel panel = new ChartPanel(chart);
+                jChartPanel.removeAll();
+                jChartPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+                jChartPanel.add(panel);
+            }
+        });
+        downloadDataForChartButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                workWithFiles.downloadVector(chartList);
+            }
+        });
+        buildChartForBookButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                XYSeries series = new XYSeries("Disperssion chart");
+
+                double accamulativeActiveResult = 0;
+                double accamulativeAllResult = 0;
+
+                for(int i = 0; i < SNRResultsArrayForBookResult.size(); i++){
+                    accamulativeActiveResult+=Double.parseDouble(SNRResultsArrayForBookResult.get(i).get(SNRResultsArrayForBookResult.size()-1));
+                    accamulativeAllResult+=Double.parseDouble(SNRResultsArrayForBookResult.get(i).get(SNRResultsArrayForBookResult.size()));
+                    series.add(i, accamulativeActiveResult/accamulativeAllResult);
+                }
+
+                XYDataset xyDataset = new XYSeriesCollection(series);
+                JFreeChart chart = ChartFactory
+                        .createXYLineChart("Disperssion chart", "x", "y",
+                                xyDataset,
+                                PlotOrientation.VERTICAL,
+                                true, true, true);
+                ChartPanel panel = new ChartPanel(chart);
+                chartForSNRResults.removeAll();
+                chartForSNRResults.setLayout(new FlowLayout(FlowLayout.LEFT));
+                chartForSNRResults.add(panel);
+            }
+        });
+        multDownloadVectorOnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                workWithTable.clearTable(tableModel);
+                SNRResult = commonWork.multiplyVectorsSNROnDownloadVector(SNRResultsArrayForBookResult, ownNumbersList);
+                commonWork.writeMultVectorOnTable(tableModel, SNRResult);
             }
         });
     }
@@ -238,9 +348,9 @@ public class MainWindow extends JFrame {
         changeSignAndReloadButton = new JButton();
         changeSignAndReloadButton.setText("Change sign and reload table");
         panel.add(changeSignAndReloadButton, new GridConstraints(4, 0, 0, 0, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        saveTableButton = new JButton();
-        saveTableButton.setText("Save Table");
-        panel.add(saveTableButton, new GridConstraints(6, 0, 0, 0, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+//        saveTableButton = new JButton();
+//        saveTableButton.setText("Save Table");
+//        panel.add(saveTableButton, new GridConstraints(6, 0, 0, 0, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

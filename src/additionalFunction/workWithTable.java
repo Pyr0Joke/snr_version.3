@@ -21,6 +21,16 @@ public class workWithTable {
             }
         }
     }
+
+    public static void tableTwoForEndVectorsDecimals(@NotNull DefaultTableModel tableModel){
+        for(int i = 0 ; i<tableModel.getColumnCount(); i++){
+            for(int j = 0; j<tableModel.getRowCount();j++){
+                if(tableModel.getValueAt(j,i)!=null)
+                    tableModel.setValueAt(BigDecimal.valueOf( Double.parseDouble( tableModel.getValueAt(j,i).toString())).
+                            setScale(2, BigDecimal.ROUND_HALF_DOWN).doubleValue(), j ,i);
+            }
+        }
+    }
     //Окрашивание столбцов таблицы по значению SNR
     public static void renderTable(@NotNull JTable table){
         for (int i = 1; i < table.getColumnCount(); i++) {

@@ -387,5 +387,26 @@ public class commonWork {
         return resultList;
     }
 
+    public static ArrayList<ArrayList<String>> multiplyVectorsSNROnDownloadVector(ArrayList<ArrayList<String>> matrix, ArrayList<String> vector){
+        ArrayList<ArrayList<String>> tempMatrix = new ArrayList<>();
+        for(int i=0; i<matrix.size();i++){
+            ArrayList<String> tempList = new ArrayList<>();
+            for (int j=1; j<matrix.get(0).size()-4;j++){
+                tempList.add(String.valueOf(Double.parseDouble(matrix.get(i).get(j))*Math.sqrt(Double.parseDouble(vector.get(i)))));
+            }
+            tempMatrix.add(tempList);
+        }
+        return tempMatrix;
+    }
+
+    public static void writeMultVectorOnTable(DefaultTableModel tableModel, ArrayList<ArrayList<String>> matrix){
+        for(int j=0; j<matrix.get(0).size(); j++)
+            tableModel.addColumn(j);
+        for (int i=0; i< matrix.size(); i++){
+            tableModel.addRow(matrix.get(i).toArray());
+        }
+        workWithTable.tableTwoForEndVectorsDecimals(tableModel);
+    }
+
 
 }
