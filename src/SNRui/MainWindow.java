@@ -108,7 +108,6 @@ public class MainWindow extends JFrame {
                 SNRListWithTempResultList = workWithTable.alertWithSumSNR(SNRList);
                 //меняем в списке snr все значения, который не удовлетворяют требованию на 0
                 SNRDataWithNullsMaxList = workWithArray.changeNotCorrectNumbersToNull(SNRDataMaxList, SNRVar);
-                System.out.println("sdfsdfsdf");
             }
         });
 
