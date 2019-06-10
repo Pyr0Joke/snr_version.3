@@ -278,7 +278,7 @@ public class MainWindow extends JFrame {
         buildChartForBookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                XYSeries series = new XYSeries("Disperssion chart");
+                XYSeries series = new XYSeries("SNR chart");
 
                 double accamulativeActiveResult = 0;
                 double accamulativeAllResult = 0;
@@ -293,7 +293,7 @@ public class MainWindow extends JFrame {
 
                     XYDataset xyDataset = new XYSeriesCollection(series);
                     JFreeChart chart = ChartFactory
-                            .createXYLineChart("Disperssion chart", "x", "y",
+                            .createXYLineChart("SNR chart", "x", "y",
                                     xyDataset,
                                     PlotOrientation.VERTICAL,
                                     true, true, true);
